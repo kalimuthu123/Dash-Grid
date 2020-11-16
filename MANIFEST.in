@@ -1,0 +1,7 @@
+include dash_grid/dash_grid.min.js
+include dash_grid/dash_grid.min.js.map
+include dash_grid/metadata.json
+include dash_grid/package-info.json
+include README.md
+include LICENSE
+include package.json
