@@ -6,6 +6,12 @@ from setuptools import setup
 with open('package.json') as f:
     package = json.load(f)
 
+# read the contents of your README file
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 package_name = package["name"].replace(" ", "_").replace("-", "_")
 
 setup(
@@ -17,6 +23,9 @@ setup(
     license=package['license'],
     description=package.get('description', package_name),
     install_requires=[],
+    # other arguments omitted
+    long_description=long_description,
+    long_description_content_type='text/markdown'
     classifiers = [
         'Framework :: Dash',
     ],    
