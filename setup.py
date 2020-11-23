@@ -25,7 +25,7 @@ setup(
     install_requires=[],
     # other arguments omitted
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     classifiers = [
         'Framework :: Dash',
     ],    
