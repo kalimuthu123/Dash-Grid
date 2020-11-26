@@ -20,44 +20,8 @@ fig3 = px.imshow([[1, 20, 30],
                  [20, 1, 60],
                  [30, 60, 1]])
 
-positionlay=[
-  {
-    "w": 2,
-    "h": 4,
-    "x": 0,
-    "y": 0,
-    "i": "0",
-    "moved": False,
-    "static": False
-  },
-  {
-    "w": 2,
-    "h": 4,
-    "x": 2,
-    "y": 0,
-    "i": "1",
-    "moved": False,
-    "static": False
-  },
-  {
-    "w": 2,
-    "h": 5,
-    "x": 4,
-    "y": 0,
-    "i": "2",
-    "moved": False,
-    "static": False
-  },
-  {
-    "w": 2,
-    "h": 5,
-    "x": 8,
-    "y": 0,
-    "i": "3",
-    "moved": False,
-    "static": False
-  }
-]
+positionlay=[{'w': 1, 'h': 5, 'x': 0, 'y': 0, 'i': '0', 'moved': False, 'static': False}, {'w': 1, 'h': 5, 'x': 2, 'y': 0, 'i': '1', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 4, 'y': 0, 'i': '2', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 8, 'y': 0, 'i': '3', 'moved': False, 'static': False}]
+
 app.layout = html.Div([
     dash_grid.DashGrid(
         id='syncdashboard',
@@ -80,6 +44,10 @@ app.layout = html.Div([
     ),
     html.Div(id='output')
 ])
+
+@app.callback(Output("output", "children"),[Input("syncdashboard", "position")] )
+def render_content(input_value):
+     return 'Output: {}'.format(input_value)
 
 """dcc.Graph(
                 id='example-graph',
