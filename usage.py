@@ -20,7 +20,7 @@ fig3 = px.imshow([[1, 20, 30],
                  [20, 1, 60],
                  [30, 60, 1]])
 
-positionlay=[{'w': 1, 'h': 5, 'x': 0, 'y': 0, 'i': '0', 'moved': False, 'static': False}, {'w': 1, 'h': 5, 'x': 2, 'y': 0, 'i': '1', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 4, 'y': 0, 'i': '2', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 8, 'y': 0, 'i': '3', 'moved': False, 'static': False}]
+positionlay=[{'w': 1, 'h': 5, 'x': 0, 'y': 0, 'i': '0', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 1, 'y': 0, 'i': '1', 'moved': False, 'static': False}, {'w': 1, 'h': 5, 'x': 0, 'y': 5, 'i': '2', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 1, 'y': 5, 'i': '3', 'moved': False, 'static': False}, {'w': 6, 'h': 11, 'x': 6, 'y': 10, 'i': '4', 'moved': False, 'static': False}, {'w': 4, 'h': 10, 'x': 8, 'y': 0, 'i': '5', 'moved': False, 'static': False}, {'w': 5, 'h': 10, 'x': 3, 'y': 0, 'i': '6', 'moved': False, 'static': False}, {'w': 6, 'h': 11, 'x': 0, 'y': 10, 'i': '7', 'moved': False, 'static': False}]
 
 app.layout = html.Div([
     dash_grid.DashGrid(
@@ -38,7 +38,23 @@ app.layout = html.Div([
                id='my-LED-display1',
                label="Default",
                value=16
-             )
+             ),
+             dcc.Graph(
+                id='example-graph',
+                figure=fig
+              ),
+               dcc.Graph(
+                id='example-graph1',
+                figure=fig1
+              ),
+              dcc.Graph(
+                id='example-graph2',
+                figure=fig2
+              ),
+              dcc.Graph(
+                id='example-graph3',
+                figure=fig3
+              )
              
 ]
     ),
@@ -47,7 +63,9 @@ app.layout = html.Div([
 
 @app.callback(Output("output", "children"),[Input("syncdashboard", "position")] )
 def render_content(input_value):
+     positionlay=input_value
      return 'Output: {}'.format(input_value)
+
 
 """dcc.Graph(
                 id='example-graph',
