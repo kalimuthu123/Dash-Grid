@@ -20,12 +20,13 @@ fig3 = px.imshow([[1, 20, 30],
                  [20, 1, 60],
                  [30, 60, 1]])
 
-positionlay=[{'w': 1, 'h': 5, 'x': 0, 'y': 0, 'i': '0', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 1, 'y': 0, 'i': '1', 'moved': False, 'static': False}, {'w': 1, 'h': 5, 'x': 0, 'y': 5, 'i': '2', 'moved': False, 'static': False}, {'w': 2, 'h': 5, 'x': 1, 'y': 5, 'i': '3', 'moved': False, 'static': False}, {'w': 6, 'h': 11, 'x': 6, 'y': 10, 'i': '4', 'moved': False, 'static': False}, {'w': 4, 'h': 10, 'x': 8, 'y': 0, 'i': '5', 'moved': False, 'static': False}, {'w': 5, 'h': 10, 'x': 3, 'y': 0, 'i': '6', 'moved': False, 'static': False}, {'w': 6, 'h': 11, 'x': 0, 'y': 10, 'i': '7', 'moved': False, 'static': False}]
+positionlay=[{'w': 1, 'h': 3, 'x': 0, 'y': 0, 'i': 'status1', 'moved': False, 'static': False}, {'w': 1, 'h': 3, 'x': 0, 'y': 3, 'i': 'status2', 'moved': False, 'static': False}, {'w': 2, 'h': 3, 'x': 1, 'y': 0, 'i': 'my-LED-display', 'moved': False, 'static': False}, {'w': 2, 'h': 3, 'x': 1, 'y': 3, 'i': 'my-LED-display1', 'moved': False, 'static': False}, {'w': 4, 'h': 10, 'x': 3, 'y': 0, 'i': 'example-graph', 'moved': False, 'static': False}, {'w': 5, 'h': 10, 'x': 7, 'y': 0, 'i': 'example-graph1', 'moved': False, 'static': False}, {'w': 6, 'h': 11, 'x': 0, 'y': 10, 'i': 'example-graph2', 'moved': False, 'static': False}, {'w': 6, 'h': 12, 'x': 6, 'y': 10, 'i': 'example-graph3', 'moved': False, 'static': False}]
 
 app.layout = html.Div([
     dash_grid.DashGrid(
         id='syncdashboard',
         position = positionlay,
+        editable=False,
         children=[
              html.P(id = "status1",children=["init-status"] ),
              html.P(id = "status2",children=["init-power"] ),
