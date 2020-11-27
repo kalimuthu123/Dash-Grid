@@ -287,3 +287,7 @@ body {
   bottom: 0;
   transform: rotate(45deg);
 }
+
+.react-grid-item:not(.react-grid-placeholder){
+     background: transparent ;
+}
