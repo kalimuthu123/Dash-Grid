@@ -15,7 +15,7 @@ export default class DashGrid extends Component {
       constructor(props) {
         super(props);
 
-        const layout = this.generateLayout();
+        const layout = this.props.position;
         this.state = { 
            layout,
           // data
@@ -24,6 +24,7 @@ export default class DashGrid extends Component {
         this.onBreakpointChange = this.onBreakpointChange.bind(this);
         this.onLayoutChange = this.onLayoutChange.bind(this);
       }
+
       componentWillMount() {
         this.setState({ layout : this.props.position }); 
         if(this.props.editable)
@@ -107,10 +108,6 @@ export default class DashGrid extends Component {
         let myAttr = {'grid-position': JSON.stringify(this.state.layout) }
         return (
             <div id={id} {...myAttr}  >
-                    <div className="layoutJSON">
-                       Displayed as <code>[x, y, w, h]</code>:
-                       <div className="columns">{this.stringifyLayout()}</div>
-                    </div>
                     <ReactGridLayout
                         {...this.props}
                         layout={this.state.layout}
