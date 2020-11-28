@@ -15,9 +15,10 @@ export default class DashGrid extends Component {
       constructor(props) {
         super(props);
 
-        const layout = this.props.position;
+        const layout = this.generateLayout();
+        this.makeditable();
         this.state = { 
-           layout,
+           layout
           // data
            };
         this.onAddItem = this.onAddItem.bind(this);
@@ -27,13 +28,32 @@ export default class DashGrid extends Component {
 
       componentWillMount() {
         this.setState({ layout : this.props.position }); 
-        if(this.props.editable)
-        {
-          console.log(this.props.editable,"edit now")
-          this.props.setProps({ isDraggable : true ,isResizable : true });
+        this.makeditable();       
+      }
+
+
+     /*  shouldComponentUpdate(nextProps, nextState) {
+            //this.makeditable();
+              if(this.props.editable)
+               {
+              console.log(this.props.editable,"edit now")
+              this.props.setProps({ isDraggable : true ,isResizable : true });
+               }
+             else {
+              this.props.setProps({ isDraggable : false ,isResizable : false });
+             }
+            console.log("nextProps", nextProps);
+            console.log("nextState", nextState);
+            //console.log(this.props, this.state);
+            return false;  
+      }*/
+      componentWillReceiveProps(nextProps) { // your code here
+        //console.log("nextProps", nextProps);
+        if (nextProps.editable){
+            this.props.setProps({ isDraggable : true ,isResizable : true });
         }
         else{
-          this.props.setProps({ isDraggable : false ,isResizable : false });
+           this.props.setProps({ isDraggable : false ,isResizable : false });
         }
       }
 
@@ -53,6 +73,17 @@ export default class DashGrid extends Component {
           };
         });
       }
+
+    makeditable() {
+      if(this.props.editable)
+           {
+              console.log(this.props.editable,"edit now")
+              this.props.setProps({ isDraggable : true ,isResizable : true });
+           }
+      else {
+              this.props.setProps({ isDraggable : false ,isResizable : false });
+          }
+    }
 
     onLayoutChange(layout) {
       //console.log("layout",layout)
@@ -110,6 +141,7 @@ export default class DashGrid extends Component {
             <div id={id} {...myAttr}  >
                     <ReactGridLayout
                         {...this.props}
+                        useCSSTransforms={false}
                         layout={this.state.layout}
                         onBreakpointChange={this.onBreakpointChange}
                         onLayoutChange={this.onLayoutChange}     

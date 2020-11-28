@@ -290,4 +290,5 @@ body {
 
 .react-grid-item:not(.react-grid-placeholder){
      background: transparent ;
+     border: none;
 }

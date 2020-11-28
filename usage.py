@@ -20,16 +20,33 @@ fig3 = px.imshow([[1, 20, 30],
                  [20, 1, 60],
                  [30, 60, 1]])
 
-positionlay=[{'w': 7, 'h': 1, 'x': 0, 'y': 0, 'i': 'status1', 'moved': False, 'static': False}, {'w': 2, 'h': 4, 'x': 0, 'y': 1, 'i': 'status2', 'moved': False, 'static': False}, {'w': 2, 'h': 3, 'x': 0, 'y': 5, 'i': 'my-LED-display', 'moved': False, 'static': False}, {'w': 2, 'h': 3, 'x': 0, 'y': 8, 'i': 'my-LED-display1', 'moved': False, 'static': False}, {'w': 7, 'h': 1, 'x': 5, 'y': 12, 'i': 'example-graph', 'moved': False, 'static': False}, {'w': 5, 'h': 12, 'x': 0, 'y': 12, 'i': 'example-graph1', 'moved': False, 'static': False}, {'w': 5, 'h': 11, 'x': 7, 'y': 0, 'i': 'example-graph2', 'moved': False, 'static': False}, {'w': 5, 'h': 1, 'x': 2, 'y': 1, 'i': 'example-graph3', 'moved': False, 'static': False}]
+positionlay=[{'w': 2, 'h': 1, 'x': 0, 'y': 0, 'i': 'status1', 'moved': False, 'static': False}, {'w': 2, 'h': 4, 'x': 0, 'y': 1, 'i': 'status2', 'moved': False, 'static': False}, {'w': 2, 'h': 1, 'x': 5, 'y': 0, 'i': 'my-multi-dynamic-dropdown', 'moved': False, 'static': False}, {'w': 2, 'h': 3, 'x': 0, 'y': 6, 'i': 'my-LED-display', 'moved': False, 'static': False}, {'w': 2, 'h': 3, 'x': 0, 'y': 9, 'i': 'my-LED-display1', 'moved': False, 'static': False}, {'w': 7, 'h': 1, 'x': 5, 'y': 12, 'i': 'example-graph', 'moved': False, 'static': False}, {'w': 5, 'h': 12, 'x': 0, 'y': 12, 'i': 'example-graph1', 'moved': False, 'static': False}, {'w': 5, 'h': 11, 'x': 7, 'y': 0, 'i': 'example-graph2', 'moved': False, 'static': False}, {'w': 5, 'h': 10, 'x': 2, 'y': 1, 'i': 'example-graph3', 'moved': False, 'static': False}, {'w': 1, 'h': 1, 'x': 0, 'y': 24, 'i': 'tabs-example', 'moved': False, 'static': False}, {'w': 1, 'h': 1, 'x': 0, 'y': 25, 'i': 'tabs-example-content', 'moved': False, 'static': False}]
 
 app.layout = html.Div([
+      daq.PowerButton(
+        id='my-power-button',
+        on=False
+    ),
+    html.Div(id='power-button-output'),
     dash_grid.DashGrid(
         id='syncdashboard',
         position = positionlay,
-        editable=True,
+        editable=False,
         children=[
              html.P(id = "status1",children=["init-status"] ),
              html.P(id = "status2",children=["init-power"] ),
+             dcc.Dropdown(
+         id="my-multi-dynamic-dropdown",
+         options=[
+        {'label': 'New York City', 'value': 'NYC'},
+        {'label': 'Montreal', 'value': 'MTL'},
+        {'label': 'San Francisco', 'value': 'SF'},
+        {'label': 'San Fraisco', 'value': 'SF1'},
+        {'label': 'San Francisco', 'value': 'SF2'},
+    ],
+    value='MTL',
+    clearable=False
+),  
              daq.LEDDisplay(
                id='my-LED-display',
                label="Default",
@@ -55,7 +72,12 @@ app.layout = html.Div([
               dcc.Graph(
                 id='example-graph3',
                 figure=fig3
-              )
+              ),
+              dcc.Tabs(id='tabs-example', value='tab-1', children=[
+                   dcc.Tab(label='Tab one', value='tab-1'),
+                   dcc.Tab(label='Tab two', value='tab-2'),
+               ]),
+               html.Div(id='tabs-example-content')
              
 ]
     ),
@@ -67,6 +89,30 @@ def render_content(input_value):
      positionlay=input_value
      return 'Output: {}'.format(input_value)
 
+@app.callback(Output('tabs-example-content', 'children'),
+              Input('tabs-example', 'value'))
+def render_content(tab):
+    if tab == 'tab-1':
+        return html.Div([
+            html.H3('Tab content 1')
+        ])
+    elif tab == 'tab-2':
+        return html.Div([
+            html.H3('Tab content 2')
+        ])
+
+@app.callback(Output('power-button-output', 'children'),[Input('my-power-button', 'on'),Input("syncdashboard", "editable")])
+def update_output(on,value):
+    return 'The button is {}.'.format(value)
+
+
+
+@app.callback(Output("syncdashboard", "editable"),[Input('my-power-button', 'on')] )
+def render_content(enable):
+       if enable == True:
+          return True
+       else:
+          return False
 
 """dcc.Graph(
                 id='example-graph',
