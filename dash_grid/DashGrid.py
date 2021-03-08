@@ -10,7 +10,7 @@ It takes a property, `id`, and children to
 displays it.
 
 Keyword arguments:
-- children (a list of or a singular dash component, string or number; optional): The children components displayed inside the grid.
+- children (list of a list of or a singular dash component, string or numbers | a list of or a singular dash component, string or number; optional): The children components displayed inside the grid.
 - id (string; optional): The ID used to identify this component in Dash callbacks.
 - editable (boolean; optional)
 - position (list; optional): The layout of the  components displayed inside the grid."""

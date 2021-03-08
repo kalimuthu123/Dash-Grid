@@ -59,17 +59,19 @@ export default class DashGrid extends Component {
 
       generateLayout() {
         const p = this.props;
-        //console.log("count",React.Children.count(this.props.children))
-        return _.map((this.props.children), function(item, i) {
+        console.log("count",this.props.children)
+		let childrenlayout = Array.isArray(this.props.children) ? this.props.children : [this.props.children];
+		console.log("childrenlayout",childrenlayout)
+        return _.map((childrenlayout), function(item, i) {
           const y = _.result(p, "y") || Math.ceil(Math.random() * 4) + 1;
           //console.log("p",p)
-          //console.log("item",item)
+          console.log("item",item)
           return {
-            x: (i * 2) % 12,
-            y: Math.floor(i / 6) * y,
+			x: i * 2,
+            y: 0,
             w: 2,
-            h: y,
-            i: item.key.toString()
+            h: 2,
+            i: ( typeof item.key  !== "undefined") ? item.key.toString() : 'test'
           };
         });
       }
@@ -135,7 +137,7 @@ export default class DashGrid extends Component {
 
     render() {
         const {id, children, position, setProps , editable } = this.props;
-        
+        let childrenlayout = Array.isArray(children) ? children : [children];
         let myAttr = {'grid-position': JSON.stringify(this.state.layout) }
         return (
             <div id={id} {...myAttr}  >
@@ -146,7 +148,7 @@ export default class DashGrid extends Component {
                         onBreakpointChange={this.onBreakpointChange}
                         onLayoutChange={this.onLayoutChange}     
                       >
-                      {this.props.children.map((child, index) => (<div key={child.key}>{child}</div>))}
+                      {childrenlayout.map((child, index) => (<div key={child.key}>{child}</div>))}
                     </ReactGridLayout>
             </div>
         );
@@ -176,7 +178,10 @@ DashGrid.propTypes = {
     /**
      * The children components displayed inside the grid.
      */
-    children : PropTypes.node,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]),
 
     editable :PropTypes.bool,
 
