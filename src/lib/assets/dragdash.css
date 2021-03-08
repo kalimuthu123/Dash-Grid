@@ -11,9 +11,27 @@ body {
 #content {
   width: 100%;
 }
+
+div {
+    display: block;
+}
+
+.react-grid-item {
+    background: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0px 1px 10px -1px rgb(30 44 57 / 15%);
+}
+
 .react-grid-layout {
   background: transparent ;
+  position: relative;
+  transition: height 200ms ease;
 }
+
+.react-grid-item.cssTransforms {
+    transition-property: transform;
+}
+
 .layoutJSON {
   background: #ddd;
   border: 1px solid black;
@@ -185,9 +203,7 @@ body {
   pointer-events: none;
   user-select: none;  
 }
-.react-grid-item.cssTransforms {
-  transition-property: transform;
-}
+
 .react-grid-item.resizing {
   z-index: 1;
   will-change: width, height;
